@@ -4,91 +4,14 @@ import sqlite3
 from tkinter import *
 from tkinter import ttk
 from functools import partial
-import sys
 import tensorflow as tf
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import LSTM, Dense, Dropout, InputLayer
 from datetime import datetime
-
-sys.path.insert(0, r"C:\Users\cocco\Desktop\collection_protocol")
-
 from functions import *
-
-#loop function for detection and prediction, I am building a GUI that has a button for prediction. it opens a cv2 window that can run at any fps
-#defining a few functions to detect, draw and extract keypoints
-
-def visualize_probabilities(res, actions, input_frame, colors):
-    output_frame = input_frame.copy()
-    for num, prob in enumerate(res):
-        cv2.rectangle(output_frame, (0,60+num*40), (int(prob*200), 90+num*40), colors[num], -1)
-        cv2.putText(output_frame, actions[num], (0, 85+num*40), cv2.FONT_HERSHEY_SIMPLEX, 1, (255,255,255), 2, cv2.LINE_AA)
-    return output_frame
-
-def predict():
-    drawing_spec_circle = mp_drawing.DrawingSpec()
-    drawing_spec_circle.circle_radius = 1
-    drawing_spec_circle.thickness = 1
-    drawing_spec_circle.color = (0,0,255)
-    drawing_spec_line = mp_drawing.DrawingSpec()
-    drawing_spec_line.thickness = 1
-    sequence = []
-    predictions = [0]
-    threshold = 0.95
-    colors = [(0,0,0), (155,155,0), (0,255,0), (255, 0, 0), (0, 0, 255)]
-
-    cap = cv2.VideoCapture(0)
-    now = random.randint(1,10000)
-    #initializing variables
-    try:
-        os.makedirs(os.path.join(os.getcwd(), "data_to_label"))
-    except:
-        pass
-    name = "data_to_label\\video_to_label" + str(now) + ".avi"
-    #video saving parameters
-    fourcc = cv2.VideoWriter_fourcc(*'XVID')
-    out = cv2.VideoWriter(name, fourcc, 6.0, (640, 480))
-
-    with mp_holistic.Holistic(min_detection_confidence=0.8) as holistic:
-        while cap.isOpened():
-            ret,frame = cap.read()
-            a = checkbox.state()
-            if len(a) > 1:
-                
-                #hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
-                out.write(frame)
-
-            image, results = mediapipe_detection(frame, holistic)
-            draw_landmarks(image, results, drawing_spec_circle, drawing_spec_line)
-
-            keypoints = extract_keypoints(results)
-            sequence.append(keypoints)
-            sequence = sequence[-8:]
-            
-            if len(sequence) == 8:
-                res = model.predict(np.expand_dims(sequence, axis=0))[0]
-                print(actions[np.argmax(res)])
-                predictions.append(np.argmax(res))
-                image = visualize_probabilities(res, actions, image, colors)
-
-            cv2.imshow('feed', image)
-
-            #close loop
-            if cv2.waitKey(10) & 0XFF == ord('q'):
-                break
-
-        cap.release()
-        cv2.destroyAllWindows()
-
-    return
-
-def toggle():
-    a = checkbox.state()
-    print(a)
-    if a[2] == 'selected':
-        print("open")
+import os
 
 #Main starting!!!
-#check_var = IntVar()
 
 #initializing keras model
 model = tf.keras.Sequential([
@@ -106,7 +29,7 @@ model = tf.keras.Sequential([
     tf.keras.layers.Dense(5, activation = 'softmax'),
 ])
 
-model.load_weights(r"C:\Users\cocco\Desktop\collection_protocol\model_weights\\5_actions_844(to_test).h5")
+model.load_weights(os.join(os.getcwd(), "model_weights\\5actions844.h5"))
 
 #initializing variables
 try:
