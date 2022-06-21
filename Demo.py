@@ -10,8 +10,6 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import LSTM, Dense, Dropout, InputLayer
 from functions import *
 import os
-import random
-import string
 
 #Main starting!!!
 
@@ -53,11 +51,11 @@ label1.pack()
 label2.pack()
 
 #Setting up the checkbox.
-checkbox = ttk.Checkbutton (prediction_frame, text = "Yes, I give my permission to collect my data.", command = toggle)
+checkbox = ttk.Checkbutton (prediction_frame, text = "Yes, I give my permission to collect my data.")
 checkbox.pack()
 
 #Setting up the predict button.
-predict_butt = Button(prediction_frame, text = "Start the Demo!", command = predict, width = 15)
+predict_butt = Button(prediction_frame, text = "Start the Demo!", command = lambda: predict(checkbox, model, actions), width = 15)
 predict_butt.pack()
 
 #Running the Tkinter loop that handles and updates the GUI.

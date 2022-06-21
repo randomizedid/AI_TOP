@@ -1,8 +1,10 @@
+from datetime import datetime
 import os
 import numpy as np
 import cv2
 import mediapipe as mp
 import random
+import datetime
 
 #setting up the mediapipe model
 mp_drawing = mp.solutions.drawing_utils
@@ -113,7 +115,7 @@ def visualize_probabilities(res, actions, input_frame, colors):
         cv2.putText(output_frame, actions[num], (0, 85+num*40), cv2.FONT_HERSHEY_SIMPLEX, 1, (255,255,255), 2, cv2.LINE_AA)
     return output_frame
 
-def predict():
+def predict(checkbox, model, actions):
     #This function makes all the LSTM prediction.
 
     #Setting up specifics for the drawings.
@@ -142,8 +144,10 @@ def predict():
     #Checking the state of the checkbox, if it is checked, a video file will be initialized with a random name (hopefully with 52^14 possible combinations there will be no repeated names, otherwise the older video will be overwritten).
     a = checkbox.state()
     if len(a) > 1:
-        char_to_choose = string.ascii_letters
-        name = ''.join(random.choice(char_to_choose) for i in range(14))
+        name = str(datetime.datetime.now())[0:4] + str(datetime.datetime.now())[5:7] + str(datetime.datetime.now())[8:10] + str(datetime.datetime.now())[11:13] + str(datetime.datetime.now())[14:16] + str(datetime.datetime.now())[17:19]
+        print(name)
+        #char_to_choose = string.ascii_letters
+        #name = ''.join(random.choice(char_to_choose) for i in range(14))
         #video saving parameters
         fourcc = cv2.VideoWriter_fourcc(*'XVID')
         out = cv2.VideoWriter("data_to_label\\" + name + ".mp4", fourcc, 6.0, (640, 480))
@@ -186,13 +190,13 @@ def predict():
         cv2.destroyAllWindows()
     return
 
-def toggle():
+""" def toggle():
     #This function prints the state of the checkbox, it is actually not used anywhere in the code as I am writing this.
     a = checkbox.state()
     print(a)
     if a[2] == 'selected':
         print("open")
-
+ """
 
 
 
