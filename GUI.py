@@ -29,7 +29,7 @@ model = tf.keras.Sequential([
     tf.keras.layers.Dense(5, activation = 'softmax'),
 ])
 
-model.load_weights(os.join(os.getcwd(), "model_weights\\5actions844.h5"))
+model.load_weights(os.path.join(os.getcwd(), "model_weights\\5_actions_0.844.h5"))
 
 #initializing variables
 try:
@@ -93,8 +93,14 @@ cover_ears_butt.grid(row = 4, column = 0, padx = 20, pady = 30)
 head_scratch_butt = Button(features_frame, text = "Head Scratch", command = lambda: collect_data("head_scratch"), width = 15)
 head_scratch_butt.grid(row = 5, column = 0, padx = 20, pady = 30)
 
+hand_flap_butt = Button(features_frame, text = "Hand Flap", command = lambda: collect_data("hand_flap"), width = 15)
+hand_flap_butt.grid(row = 6, column = 0, padx = 20, pady = 30)
+
+head_hit_butt = Button(features_frame, text = "Head Hit", command = lambda: collect_data("head_hit"), width = 15)
+head_hit_butt.grid(row = 7, column = 0, padx = 20, pady = 30)
+
 no_action_butt = Button(features_frame, text = "No Action", width = 15)
-no_action_butt.grid(row = 6, column = 0, padx = 20, pady = 30)
+no_action_butt.grid(row = 8, column = 0, padx = 20, pady = 30)
 
 #predict frame button and text
 label1 = Label(prediction_frame, text="This button opens the Action Recognition Demo! Note that these action executions will be recorded to be subsequently labeled and used to improve the model.", font= ("Arial", 8))
