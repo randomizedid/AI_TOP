@@ -21,5 +21,5 @@ Using this notebook one can train a novel model based on the data we collected s
 ## functions.py
 The functions file is a set of functions used by the other files, so make sure to have them both in the same folder or nothing will run!
 
-#Thanks for your time!
+# Thanks for your time!
 If you have any questions, ideas or feedback don't hesitate to contact me, thanks and enjoy!
