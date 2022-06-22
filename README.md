@@ -4,8 +4,8 @@ The project AI TOP focuses on using AI to help students with disabilities by rec
 For now there are only some files and those may seem like a mess, but I will soon upload the rest of the scripts, and will keep the repo up to date and tidy.
 
 ###### Current weights
-In this section I will keep the name of the best model weights I have been able to train, be sure to check your version of the file is using the right one!
 So far, the best weights are stored in: 5_actions_0.844.h5
+Be sure to use the right weights in your file!
 
 Let's see what the file do!
 
