@@ -7,6 +7,7 @@ For now there are only some files and those may seem like a mess, but I will soo
 So far, the best weights are stored in: 5_actions_0.844.h5
 Be sure to use the right weights in your file!
 
+## Preparing the environment
 First, you have to create the virtual environment! 
 Make sure to have Anaconda installed, then open the Anaconda Terminal (from search bar).
 Once you are in your Anaconda terminal, navigate to the repository folder in your workstation (where all the files and the conda_environment.yml is) and type: 
